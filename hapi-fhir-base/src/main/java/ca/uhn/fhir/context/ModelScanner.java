@@ -113,7 +113,11 @@ class ModelScanner {
 			for (Class<? extends IBase> nextClass : typesToScan) {
 				scan(nextClass);
 			}
-			myScanAlso.removeIf(theClass -> myClassToElementDefinitions.containsKey(theClass));
+			for (Iterator<Class<? extends IBase>> iter = myScanAlso.iterator(); iter.hasNext();) {
+				if (myClassToElementDefinitions.containsKey(iter.next())) {
+					iter.remove();
+				}
+			}
 			typesToScan.clear();
 			typesToScan.addAll(myScanAlso);
 			myScanAlso.clear();
